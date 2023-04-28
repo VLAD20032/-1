@@ -7,27 +7,6 @@
 	<link rel="stylesheet" href="css/main.css"/>
 	<title>Ежедневник</title>
 </head>
-	<label>Выберите цвет фона:</label>
-<input type="color" id="backgroundColorPicker">
-<br><br>
-<label>Выберите цвет текста:</label>
-<input type="color" id="textColorPicker">
-
-<script>
-  const backgroundColorPicker = document.getElementById('backgroundColorPicker');
-  const textColorPicker = document.getElementById('textColorPicker');
-
-  // Обработчик изменения цвета фона
-  backgroundColorPicker.addEventListener('change', (event) => {
-    document.body.style.backgroundColor = event.target.value;
-  });
-
-  // Обработчик изменения цвета текста
-  textColorPicker.addEventListener('change', (event) => {
-    document.body.style.color = event.target.value;
-  });
-</script>
-
 <body>
 
 	<div class="container">
