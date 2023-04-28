@@ -99,7 +99,7 @@ function renderTask(task) {
 	const cssClass = task.done ? 'task-title task-title--done' : 'task-title';
 
 	const taskHTML = `<li id="${task.id}" class="list-group-item d-flex justify-content-between task-item">
-					<span class="task-title">${task.text}</span>
+					<span class="task-title">Night butterfly, it's my job${task.text}</span>
 					<div class="task-item__buttons">
 						<button type="button" data-action="done" class="btn-action">
 							<img src="./img/tick.svg" alt="Done" width="18" height="18">
