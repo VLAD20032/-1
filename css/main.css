@@ -21,6 +21,7 @@ body {
 .task-title {
   font-weight: 400;
   padding-top: 5px;
+  width: 70%;
 }
 .main-title {
   font-size: 48px;
@@ -35,6 +36,7 @@ body {
 .task-item__buttons {
   display: flex;
   column-gap: 5px;
+  align-items: center;
 }
 .notify-holder {
   height: 60px;
@@ -65,7 +67,7 @@ body {
     border-radius: 4px;
     transition: opacity 0.2s ease-in;
     opacity: 0.5;
-
+    height: fit-content;
     display: flex;
     justify-content: center;
     align-items: center;
