@@ -21,7 +21,6 @@ body {
 .task-title {
   font-weight: 400;
   padding-top: 5px;
-  width: 70%;
 }
 .main-title {
   font-size: 48px;
@@ -36,7 +35,6 @@ body {
 .task-item__buttons {
   display: flex;
   column-gap: 5px;
-  align-items: center;
 }
 .notify-holder {
   height: 60px;
@@ -67,7 +65,7 @@ body {
     border-radius: 4px;
     transition: opacity 0.2s ease-in;
     opacity: 0.5;
-    height: fit-content;
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -95,4 +93,69 @@ body {
   color: gray;
   text-align: center;
   margin-bottom: 30px;
+}
+
+.button-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1.5rem;
+}
+
+.done-tasks-delete {
+  background: transparent;
+  border: 1px solid #E88B8B;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 8px 16px;
+  color: #E88B8B;
+  transition: 0.7s ease;
+}
+
+.done-tasks-delete:hover {
+  background: #E88B8B;
+  color: #fff;
+}
+
+.inputs-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.date-input {
+  width: 20px;
+  height: auto;
+  margin-left: 5px;
+  padding: 0;
+  border: none;
+  background: transparent;
+}
+
+.date-input::-webkit-calendar-picker-indicator {
+  color: transparent;
+  opacity: 1;
+  background: url("../img/calendar.svg") no-repeat center;
+  background-size: contain;
+}
+
+.task-item__buttons {
+  display: flex;
+  align-items: center;
+}
+
+.date-select {
+  border: none;
+  background-color: #0062cc;
+  color: #fff;
+  padding: 8px 16px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+}
+
+.select-label {
+  padding-right: 20px;
+}
+
+.task-date {
+  padding-right: 10px;
 }
