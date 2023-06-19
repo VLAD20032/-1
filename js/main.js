@@ -1,8 +1,12 @@
 // Находим элементы на странице
 const form = document.querySelector('#form');
 const taskInput = document.querySelector('#taskInput');
+const dateInput = document.querySelector('#taskDateInput');
 const tasksList = document.querySelector('#tasksList');
 const emptyList = document.querySelector('#emptyList');
+const dateSelect = document.querySelector('#dateSelect');
+
+
 
 let tasks = [];
 
@@ -17,6 +21,9 @@ checkEmptyList();
 form.addEventListener('submit', addTask);
 tasksList.addEventListener('click', deleteTask);
 tasksList.addEventListener('click', doneTask);
+tasksList.addEventListener('click', editTask);
+window.addEventListener('click', deleteDoneTasks);
+dateSelect.addEventListener('change', showSelectedDateTasks);
 
 // Функции
 function addTask(event) {
@@ -24,10 +31,13 @@ function addTask(event) {
 
 	const taskText = taskInput.value;
 
+	const date = dateInput.value;
+
 	const newTask = {
 		id: Date.now(),
 		text: taskText,
 		done: false,
+		date: date,
 	};
 
 	tasks.push(newTask);
@@ -38,6 +48,8 @@ function addTask(event) {
 
 	taskInput.value = "";
 	taskInput.focus();
+
+	fillDateSelect();
 
 	checkEmptyList();
 }
@@ -54,6 +66,29 @@ function deleteTask(event) {
 	saveToLocalStorage();
 
 	parentNode.remove();
+
+	checkEmptyList();
+
+	fillDateSelect();
+}
+
+function deleteDoneTasks(event) {
+	if (event.target.dataset.action !== 'deleteDoneTasks') return;
+
+	const doneTasksTitles = document.querySelectorAll('.task-title--done');
+	const doneTasksIds = [];
+
+	doneTasksTitles.forEach((task) => {
+		const taskWrapper = task.closest('.task-item');
+		doneTasksIds.push(taskWrapper.id);
+		taskWrapper.remove();
+	});
+
+	tasks = tasks.filter((task) => !doneTasksIds.includes(String(task.id)));
+
+	saveToLocalStorage();
+
+	fillDateSelect();
 
 	checkEmptyList();
 }
@@ -99,16 +134,84 @@ function renderTask(task) {
 	const cssClass = task.done ? 'task-title task-title--done' : 'task-title';
 
 	const taskHTML = `<li id="${task.id}" class="list-group-item d-flex justify-content-between task-item">
-					<span class="task-title">${task.text}</span>
+					<span class="task-title ${cssClass}">${task.text}</span>
 					<div class="task-item__buttons">
+						<span class="task-date">${task.date}</span>
+						<button type="button" data-action="edit" class="btn-action">
+							<img src="./img/pencil.svg" alt="pencil" width="18" height="18">
+						</button>
 						<button type="button" data-action="done" class="btn-action">
 							<img src="./img/tick.svg" alt="Done" width="18" height="18">
 						</button>
 						<button type="button" data-action="delete" class="btn-action">
-							<img src="./img/cross.svg" alt="Done" width="18" height="18">
+							<img src="./img/cross.svg" alt="delete" width="18" height="18">
 						</button>
 					</div>
 				</li>`;
 
 	tasksList.insertAdjacentHTML('beforeend', taskHTML);
+}
+
+function fillDateSelect() {
+
+	dateSelect.innerHTML = "";
+
+	const dateArray = [];
+	tasks.forEach((task) => {
+		dateArray.push(task.date);
+	});
+
+	const ununiqueDateArray = [...new Set(dateArray)];
+
+	const defautlOptionHTML = `<option value="default" class="date-option">Все задачи</option>`;
+	dateSelect.insertAdjacentHTML('afterbegin', defautlOptionHTML);
+
+	ununiqueDateArray.forEach((date) => {
+		const dateOptionHTML = `<option value="${date}" class="date-option">${date}</option>`;
+
+		dateSelect.insertAdjacentHTML('beforeend', dateOptionHTML);
+	})
+}
+
+fillDateSelect();
+
+function showSelectedDateTasks() {
+	if (dateSelect.value === 'default') {
+		tasksList.innerHTML = "";
+		tasks.forEach((task) => renderTask(task));
+	};
+
+	if (dateSelect.value !== 'default') {
+		const selectedDate = dateSelect.value;
+
+		const selectedDateTasks = [];
+
+		tasks.forEach((task) => {
+			if (task.date === selectedDate) {
+				selectedDateTasks.push(task);
+			}
+		});
+
+		tasksList.innerHTML = "";
+
+		selectedDateTasks.forEach((task) => renderTask(task));
+	}
+}
+
+function editTask(event) {
+	if (event.target.dataset.action !== 'edit') return;
+
+	const taskId = event.target.closest('.task-item').id;
+	const taskEl = document.getElementById(taskId);
+	const taskTitle = taskEl.querySelector('.task-title');
+
+	let editedTask = prompt('Введите текст задачи');
+
+	tasks.forEach((task) => {
+		if (task.id === parseInt(taskId)) {
+			task.text = editedTask;
+			taskTitle.innerText = editedTask;
+		}
+	});
+	saveToLocalStorage();
 }
