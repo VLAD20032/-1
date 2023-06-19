@@ -13,7 +13,14 @@
 
 		<div class="display-4 mb-2 main-title">Ежедневник</div>
 		<div class="h4 mb-5">список задач на сегодня</div>
+		<div class="select-wrapper">
+			<label for="dateSelect" class="select-label">
+				Выберите дату
+			</label>
+			<select name="date-select" id="dateSelect" class="date-select">
 
+			</select>
+		</div>
 		<!-- List of tasks -->
 		<div class="card mb-4">
 			<ul id="tasksList" class="list-group list-group-flush">
@@ -21,14 +28,19 @@
 			</ul>
 		</div>
 		<!-- //List of tasks -->
-
+		<div class="button-wrapper">
+			<button type="button" class="done-tasks-delete" data-action="deleteDoneTasks">Удалить выполненые задачи</button>
+		</div>
 		<!-- Form -->
 		<div class="card bg-light" >
 			<div class="card-header">Добавить новую задачу</div>
 			<div class="card-body">
 				<form id="form">
 					<div class="form-group">
-						<input type="text" class="form-control" id="taskInput" placeholder="Текст задачи" required>
+						<div class="inputs-wrapper">
+							<input type="text" class="form-control" id="taskInput" placeholder="Текст задачи" required>
+							<input type="date" class="form-control date-input" id="taskDateInput" required>
+						</div>
 						<small id="emailHelp" class="form-text text-muted">Что делаем, сколько времени тратим, какой результат получаем.</small>
 					</div>
 					<button type="submit" class="btn btn-primary  btn-lg active">Добавить</button>
@@ -41,7 +53,7 @@
 	</div>
 
 	<div class="copyright">
-		Мараныгин Владислав Вячеславович ДП
+		Дипломный проект
 	</div>
 
 	<script src="js/main.js"></script>
